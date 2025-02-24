@@ -21,4 +21,4 @@ jobs:
           echo "====== SHA THAT TRIGGERS THE WORKFLOW: ${{ github.sha }}"
           changed_files=$(git diff --name-only "upstream/main..HEAD" | tr "\n" " ")
           echo "CHANED FILES: ${changed_files}"
-          ./sample.py "${changed_files}"
+          ./sample.py ${changed_files}
