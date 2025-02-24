@@ -14,10 +14,11 @@ jobs:
         run: |
           echo "=======CHECKOUT REMOTE BRANCH ========"
           git remote add upstream https://github.com/susdas-qe/test-merge-queue.git
-          echo "========= FETCHING REMOTE BRANCHES"
-          git fetch upstream
+          echo "========= FETCHING REMOTE MAIN BRANCH"
+          git fetch upstream main
           echo "==========CURRENT BRANCH======="
           git rev-parse --abbrev-ref HEAD
           echo "====== SHA THAT TRIGGERS THE WORKFLOW: ${{ github.sha }}"
-          echo "==========CHANGED FILES======="
-          git diff --name-status "upstream/main..HEAD"
+          changed_files=$(git diff --name-only "upstream/main..HEAD" | tr "\n" " ")
+          echo "CHANED FILES: ${changed_files}"
+          ./sample.py "${changed_files}"
