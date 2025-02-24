@@ -12,3 +12,4 @@ jobs:
       - name: check files changed
         run: |
           git remote -v
+          git branch -v
