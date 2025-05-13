@@ -9,16 +9,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-      - name: check files changed
+          ref: "${{ github.event.pull_request.head.sha }}"
+          path: test-merge-queue
+      - name: Get all changed files in the PR from task directory
+        id: changed-dirs
+        uses: tj-actions/changed-files@27ae6b33eaed7bf87272fdeb9f1c54f9facc9d99
+      - name: Print all the changed_files
         run: |
-          echo "=======CHECKOUT REMOTE BRANCH ========"
-          git remote add upstream https://github.com/susdas-qe/test-merge-queue.git
-          echo "========= FETCHING REMOTE MAIN BRANCH"
-          git fetch upstream main
-          echo "==========CURRENT BRANCH======="
-          git rev-parse --abbrev-ref HEAD
-          echo "====== SHA THAT TRIGGERS THE WORKFLOW: ${{ github.sha }}"
-          changed_files=$(git diff --name-only "upstream/main..HEAD" | tr "\n" " ")
-          echo "CHANED FILES: ${changed_files}"
-          ./sample.py ${changed_files}
+          echo "${{ steps.changed-dirs.outputs.all_changed_files }}"
+      # - name: check files changed
+      #   run: |
+      #     echo "=======CHECKOUT REMOTE BRANCH ========"
+      #     git remote add upstream https://github.com/susdas-qe/test-merge-queue.git
+      #     echo "========= FETCHING REMOTE MAIN BRANCH"
+      #     git fetch upstream main
+      #     echo "==========CURRENT BRANCH======="
+      #     git rev-parse --abbrev-ref HEAD
+      #     echo "====== SHA THAT TRIGGERS THE WORKFLOW: ${{ github.sha }}"
+      #     changed_files=$(git diff --name-only "upstream/main..HEAD" | tr "\n" " ")
+      #     echo "CHANED FILES: ${changed_files}"
+      #     ./sample.py ${changed_files}
