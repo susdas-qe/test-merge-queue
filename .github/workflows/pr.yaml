@@ -7,16 +7,18 @@ jobs:
     name: validate-changes
     runs-on: ubuntu-latest
     steps:
-      - name: check envs
-        run: |
-          echo "GITHUB REF: ${GITHUB_REF}"
-          echo "SHA: ${GITHUB_SHA}"
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           # Differential Checkton requires full git history
           fetch-depth: 0
+
+      - name: check values
+        run: |
+          echo "GITHUB REF: ${GITHUB_REF}"
+          echo "SHA: ${GITHUB_SHA}"
+          echo "BASE: $(git rev-parse main)"
+          echo "HEAD: $(git rev-parse HEAD)"
 
       - name: Run Checkton
         id: checkton
