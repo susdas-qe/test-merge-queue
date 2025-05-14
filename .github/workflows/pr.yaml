@@ -17,8 +17,9 @@ jobs:
         run: |
           echo "GITHUB REF: ${GITHUB_REF}"
           echo "SHA: ${GITHUB_SHA}"
-          echo "BASE: $(git rev-parse main)"
-          echo "HEAD: $(git rev-parse HEAD)"
+          ls -lrt
+          # echo "BASE: $(git rev-parse main)"
+          # echo "HEAD: $(git rev-parse HEAD)"
 
       - name: Run Checkton
         id: checkton
