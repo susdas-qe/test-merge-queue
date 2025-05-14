@@ -11,6 +11,22 @@ jobs:
         run: |
           echo "GITHUB REF: ${GITHUB_REF}"
           echo "SHA: ${GITHUB_SHA}"
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Differential Checkton requires full git history
+          fetch-depth: 0
+
+      - name: Run Checkton
+        id: checkton
+        uses: chmeliik/checkton@v0.3.1
+        with:
+          # Set to false when re-enabling SARIF uploads
+          fail-on-findings: true
+          find-copies-harder: true
+          exclude-regex: ^task-generator
+
       # - uses: actions/checkout@v4
       #   with:
       #     ref: "${{ github.event.pull_request.head.sha }}"
