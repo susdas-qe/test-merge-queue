@@ -4,7 +4,7 @@ on:
   merge_group:
 jobs:
   security_scan:
-    name: Security scan
+    name: validate-changes
     runs-on: ubuntu-latest
     strategy:
       matrix:
