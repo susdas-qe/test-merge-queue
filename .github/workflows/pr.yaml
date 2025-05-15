@@ -3,7 +3,7 @@ on:
   pull_request:
   merge_group:
 jobs:
-  security_scan:
+  static_checks:
     name: validate-changes
     runs-on: ubuntu-latest
     strategy:
