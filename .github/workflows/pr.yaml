@@ -23,7 +23,7 @@ jobs:
 
       - name: Run Checkton
         id: checkton
-        uses: tisutisu/checkton@v0.3.1
+        uses: tisutisu/checkton@main
         with:
           # Set to false when re-enabling SARIF uploads
           fail-on-findings: true
