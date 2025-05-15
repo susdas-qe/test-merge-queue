@@ -6,6 +6,9 @@ jobs:
   static_checks:
     name: validate-changes
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
     strategy:
       matrix:
         path:
