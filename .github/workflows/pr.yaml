@@ -47,7 +47,7 @@ jobs:
 
       - name: Run Checkton
         id: checkton
-        uses: tisutisu/checkton@b3486c8faa4e227a8d71c74bc04f814bbdf69cdd
+        uses: tisutisu/checkton@58cb98c2da27747111d06bdb2f1d5e40677d4abb
         with:
           # Set to false when re-enabling SARIF uploads
           fail-on-findings: true
