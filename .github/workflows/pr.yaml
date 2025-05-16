@@ -41,13 +41,13 @@ jobs:
         run: |
           echo "GITHUB REF: ${GITHUB_REF}"
           echo "SHA: ${GITHUB_SHA}"
-          echo "GITHUB_WORKPACE: ${GITHUB_WORKPLACE}"
+          echo "GITHUB_WORKPACE: ${GITHUB_WORKPACE}"
           echo "BASE: $(git rev-parse main)"
           echo "HEAD: $(git rev-parse HEAD)"
 
       - name: Run Checkton
         id: checkton
-        uses: tisutisu/checkton@58cb98c2da27747111d06bdb2f1d5e40677d4abb
+        uses: tisutisu/checkton@c117b337c153dc7c32de4e8c262e71eb59834e7c
         with:
           # Set to false when re-enabling SARIF uploads
           fail-on-findings: true
