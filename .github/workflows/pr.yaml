@@ -43,7 +43,7 @@ jobs:
 
       - name: Run Checkton on PR
         id: checkton_on_pr
-        if: ${{ github.event_name }} == "pull_request"
+        if: github.event_name == 'pull_request'
         uses: chmeliik/checkton@v0.3.1
         with:
           # Set to false when re-enabling SARIF uploads
@@ -55,7 +55,7 @@ jobs:
       
       - name: Run Checkton on MQ
         id: checkton_on_mr
-        if: ${{ github.event_name }} == "merge_group"
+        if: github.event_name == 'merge_group'
         uses: chmeliik/checkton@v0.3.1
         with:
           # Set to false when re-enabling SARIF uploads
