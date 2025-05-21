@@ -40,30 +40,19 @@ jobs:
       - name: check event type
         run: |
           echo "GITHUB EVENT: ${{ github.event_name }}"
+          echo "pull request base: ${{ github.event.pull_request.base.sha }}"
+          echo "merge queue base: ${{ github.event.merge_group.base_sha }}"
+          echo "relevant base: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}"
 
-      - name: Run Checkton on PR
-        id: checkton_on_pr
-        if: github.event_name == 'pull_request'
+      - name: Run Checkton
         uses: chmeliik/checkton@v0.3.1
         with:
           # Set to false when re-enabling SARIF uploads
           fail-on-findings: true
           find-copies-harder: true
           exclude-regex: ^task-generator
-          pull-request-head: ${{ github.event.pull_request.head.sha }}
-          pull-request-base: ${{ github.event.pull_request.base.sha }}
-      
-      - name: Run Checkton on MQ
-        id: checkton_on_mr
-        if: github.event_name == 'merge_group'
-        uses: chmeliik/checkton@v0.3.1
-        with:
-          # Set to false when re-enabling SARIF uploads
-          fail-on-findings: true
-          find-copies-harder: true
-          exclude-regex: ^task-generator
-          pull-request-head: ${{ github.event.merge_group.head_sha }}
-          pull-request-base: ${{ github.event.merge_group.base_sha }}
+          pull-request-head: ${{ github.event.pull_request.head.sha || github.event.merge_group.head_sha }}
+          pull-request-base: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
 
 
       # - uses: actions/checkout@v4
