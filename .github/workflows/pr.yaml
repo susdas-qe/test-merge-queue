@@ -37,22 +37,34 @@ jobs:
           # Differential Checkton requires full git history
           fetch-depth: 0
 
-      - name: check values
+      - name: check event type
         run: |
-          echo "GITHUB REF: ${GITHUB_REF}"
-          echo "SHA: ${GITHUB_SHA}"
-          echo "GITHUB_WORKPACE: ${GITHUB_WORKPACE}"
-          echo "BASE: $(git rev-parse main)"
-          echo "HEAD: $(git rev-parse HEAD)"
+          echo "GITHUB EVENT: ${github.event_name}"
 
-      - name: Run Checkton
+      - name: Run Checkton on PR
         id: checkton
-        uses: tisutisu/checkton@8279ac4411ec38a6dfc09b7bce59bacf9bbd7294
+        if: github.event_name == "pull_request"
+        uses: chmeliik/checkton@v0.3.1
         with:
           # Set to false when re-enabling SARIF uploads
           fail-on-findings: true
           find-copies-harder: true
           exclude-regex: ^task-generator
+          pull-request-head: '${{ github.event.pull_request.head.sha }}'
+          pull-request-base: '${{ github.event.pull_request.base.sha }}'
+      
+      - name: Run Checkton on MQ
+        id: checkton
+        if: github.event_name == "merge_group"
+        uses: chmeliik/checkton@v0.3.1
+        with:
+          # Set to false when re-enabling SARIF uploads
+          fail-on-findings: true
+          find-copies-harder: true
+          exclude-regex: ^task-generator
+          pull-request-head: '${{ github.event.merge_group.head_sha }}'
+          pull-request-base: '${{ github.event.merge_group.base_sha }}'
+
 
       # - uses: actions/checkout@v4
       #   with:
